@@ -1,63 +1,66 @@
 <script>
-  import Table from '../lib/Table.svelte'
-  export let data
-</script>
+	// import { Auth } from "firebase/auth";
+	// import logo from '$lib/images/logo.png';
+	import ladyDoctor from '$lib/images/ladyDoctor.png';
+	import doctor from '$lib/images/doctor.png';
+	import secretariaLogo from '$lib/images/logo_secretaria-circle-main.png';
+	import Input from '$lib/components/Input.svelte';
+	import Alert from "$lib/components/Alert.svelte";
+    import {displayAlert} from "../stores/alertStore"
 
-<main
-  class="relative flex flex-col items-center justify-center min-h-screen py-10"
->
-  <a
-    href="https://vercel.com"
-    class="px-6 py-2 text-sm font-medium text-gray-600 transition-all rounded-full shadow-sm bg-white/30 dark:bg-white/80 ring-1 ring-gray-900/5 dark:text-black hover:shadow-lg active:shadow-sm"
-  >
-    Deploy your own to Vercel
-  </a>
-  <h1
-    class="pt-4 pb-8 bg-gradient-to-br dark:from-white from-black via-[#707070] to-[#ffffff] bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
-  >
-    Postgres on Vercel
-  </h1>
-  <Table users={data?.users} duration={data?.duration} />
-  <div
-    class="w-full max-w-lg mt-6 font-light text-center text-gray-600 dark:text-gray-300"
-  >
-    Simple hello world demo of
-    <a
-      href="https://vercel.com/postgres"
-      class="font-medium underline transition-colors underline-offset-4 dark:hover:text-white hover:text-black"
-    >
-      Vercel Postgres
-    </a>
-    <div class="flex items-center justify-center my-2">
-      <span>Built with</span>
-      <a
-        href="https://kit.svelte.dev/"
-        class="flex items-center font-medium underline transition-colors underline-offset-4 dark:hover:text-white hover:text-black"
-      >
-        <span class="flex justify-center w-8">
-          <img src="svelte_logo.png" alt="svelte logo" class="h-6 mx-2" />
-        </span>
-        <p>SvelteKit</p>
-      </a>
-      .
-    </div>
-  </div>
-  <div class="flex flex-col items-center grow">
-    <a href="https://vercel.com">
-      <img
-        src="/vercel.svg"
-        alt="Vercel Logo"
-        class="h-4 my-4 dark:invert"
-        width={100}
-        height={24}
-      />
-    </a>
-    <a
-      href="https://github.com/vercel/examples/tree/main/storage/postgres-sveltekit"
-      class="flex items-center h-8 mt-auto space-x-2 bottom-20 right-20"
-    >
-      <img src="/github.svg" alt="GitHub Logo" class="h-6 dark:invert" />
-      <p class="font-light">Source</p>
-    </a>
-  </div>
+
+	let email = '';
+	let password = '';
+	let valueSubmit = 'ENTRAR'
+	$: console.log(email, password);
+
+	async function handleSubmit() {
+
+	}
+</script>
+<Alert />
+<main>
+	<div class="flex flex-col gap-3 items-center justify-center mb-1 py-6">
+		<img src={secretariaLogo} class="max-w-12 lg:max-w-16" alt="" />
+		<h1 class=" text-2xl">Emergencia Falcón</h1>
+	</div>
+	<div class="flex justify-center items-center  w-full">
+		<img src={doctor} class="max-w-96 h-96" alt="" />
+	
+		<div class="text-center">
+			
+			<form
+				method="post"
+				action="/"
+				class="mx-auto bg-white bg-opacity-5 rounded-lg shadow-2xl p-6 max-w-96  min-w-72 text-center  flex flex-col md:h-96 min-h-96"
+			>
+				<legend class=" opacity-70 mb-6">INICIAR SESIÓN</legend>
+				<div>
+					<Input type={'number'} label={'Cédula'} bind:value={email} classes={'mb-5'} />
+					<!-- <input bind:value={email}> -->
+					<Input type={'password'} label={'Contraseña'} bind:value={password} />
+				</div>
+				<input
+					type="submit"
+					value={valueSubmit}
+					class="hover:bg-color3 hover:text-white duration-200 mt-auto w-full bg-color2 text-black font-bold py-3 rounded-md cursor-pointer"
+				/>
+			</form>
+		</div>
+		<img src={ladyDoctor} class="max-w-96 h-96" alt="" />
+
+	
+	</div>
 </main>
+
+<style>
+	.home_container {
+		background: rgb(172, 215, 242);
+		background: linear-gradient(
+			306deg,
+			rgba(172, 215, 242, 1) 9%,
+			rgba(11, 29, 75, 1) 87%,
+			rgba(1, 17, 64, 1) 93%
+		);
+	}
+</style>
