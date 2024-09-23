@@ -46,6 +46,13 @@ export const actions = {
       const userAttemptingLogin = await findUserByCiWithPassword(db,ci);
       const authAttempt = await bcryptjs.compare(password,userAttemptingLogin.password);
 
+      if(!authAttempt){
+
+        loginResponse.error = true
+        loginResponse.message = "Cédula o contraseña"
+
+      }
+
     }
 
 
