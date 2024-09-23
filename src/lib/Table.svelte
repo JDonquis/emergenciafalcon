@@ -1,7 +1,7 @@
 <script>
 	import ms from 'ms';
 	/**
-	 * @type {{id: string, name: string, email: string, image: string, createdAt: string}[]}
+	 * @type {{id: string, name: string, lastname: string, ci: string, createdAt: string}[]}
 	 */
 	export let users;
 	/**
@@ -38,16 +38,9 @@
 		{#each users as user (user.id)}
 			<div class="flex items-center justify-between py-3">
 				<div class="flex items-center space-x-4">
-					<img
-						src={user.image}
-						alt={user.name}
-						width={48}
-						height={48}
-						class="rounded-full ring-1 ring-gray-900/5"
-					/>
 					<div class="space-y-1">
 						<p class="font-medium leading-none">{user.name}</p>
-						<p class="text-sm text-gray-500">{user.email}</p>
+						<p class="text-sm text-gray-500">{user.lastname}</p>
 					</div>
 				</div>
 				<p class="text-sm text-gray-500">{timeAgo(user.createdAt)}</p>
