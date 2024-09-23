@@ -31,12 +31,12 @@
 			
 			<form
 				method="post"
-				action="/"
+				action="?/login"
 				class="mx-auto bg-white bg-opacity-5 rounded-lg shadow-2xl p-6 max-w-80  min-w-64 text-center  flex flex-col md:h-96 min-h-96"
 			>
 				<legend class=" opacity-70 mb-6">INICIAR SESIÓN</legend>
 				<div>
-					<Input type={'number'} label={'Cédula'} name="ci" bind:value={email} classes={'mb-5'} />
+					<Input type={'number'} label={'Cédula'} name="ci" bind:value={ci} classes={'mb-5'} />
 					<!-- <input bind:value={email}> -->
 					<Input type={'password'} label={'Contraseña'} name="password" bind:value={password} />
 				</div>

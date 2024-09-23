@@ -32,9 +32,6 @@ export const actions = {
   login: async ({cookies, request}) => {
     const loginFormData = await request.formData();
 
-    console.log(request)
-    console.log(loginFormData)
-
     const ci = loginFormData.get('ci')?.toString()?? '';
     const password = loginFormData.get('password')?.toString()?? '';
 
@@ -50,7 +47,7 @@ export const actions = {
       
       const db = createPool({ connectionString: POSTGRES_URL });
       const userAttemptingLogin = await findUserByCiWithPassword(db,ci);
-      const authAttempt = await bcryptjs.compare(password,userAttemptingLogin.password);
+      const authAttempt = await bcryptjs.compare(password,userAttemptingLogin?.password ?? '');
 
       if(!authAttempt){
 
@@ -63,9 +60,7 @@ export const actions = {
 
         const {password,...userDataWithoutPassword} = userAttemptingLogin;
         const authToken = jwt.sign({authedUser:userDataWithoutPassword},SECRET_INGREDIENT, {expiresIn:'48h'});
-        cookies.set('authToken',authToken,{httpOnly:true, maxAge: 60 * 60 * 48, sameSite:'strict'})
-
-        console.log('here');
+        cookies.set('authToken',authToken,{httpOnly:true, maxAge: 60 * 60 * 48, sameSite:'strict', path:'/'})
 
         throw redirect(302,'dashboard');
 
@@ -79,8 +74,7 @@ export const actions = {
     }
     
     loginResponse.error = true;
-    loginResponse.message = 'Algo ha salido mal';
-
+    console.log(loginResponse)
     return loginResponse;
 
   }
