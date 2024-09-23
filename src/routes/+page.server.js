@@ -3,9 +3,11 @@ import { createPool, sql } from '@vercel/postgres'
 
 import { POSTGRES_URL } from '$env/static/private'
 
+import {SECRET_INGREDIENT} from '$env/static/private';
+
 import { error, redirect } from '@sveltejs/kit';
 
-import { findUserByCiWithPassword } from '../../backednUtils';
+import { findUserByCiWithPassword } from '../../backendUtils.js';
 
 import bcryptjs from 'bcryptjs';
 
@@ -20,6 +22,7 @@ export async function load({cookies}) {
      return {clearUser:true};
 
   return {clearUser:false};
+
 
 }
 
@@ -44,17 +47,35 @@ export const actions = {
       
       const db = createPool({ connectionString: POSTGRES_URL });
       const userAttemptingLogin = await findUserByCiWithPassword(db,ci);
-      const authAttempt = await bcryptjs.compare(password,userAttemptingLogin.password);
+      const authAttempt = await bcryptjs.compare(password,userAttemptingLogin?.password ?? '');
 
       if(!authAttempt){
 
         loginResponse.error = true
-        loginResponse.message = "Cédula o contraseña"
+        loginResponse.message = "Cédula o contraseña incorrecta"
+
+      }
+
+      if(authAttempt){
+
+        const {password,...userDataWithoutPassword} = userAttemptingLogin;
+        const authToken = jwt.sign({authedUser:userDataWithoutPassword},SECRET_INGREDIENT, {expiresIn:'48h'});
+        cookies.set('authToken',authToken,{httpOnly:true, maxAge: 60 * 60 * 48, sameSite:'strict', path:'/'})
+
+        throw redirect(302,'dashboard');
+
 
       }
 
     }
 
+    finally{
+      
+    }
+    
+    loginResponse.error = true;
+    console.log(loginResponse)
+    return loginResponse;
 
   }
 
