@@ -38,9 +38,9 @@
 			>
 				<legend class=" opacity-70 mb-6">INICIAR SESIÓN</legend>
 				<div>
-					<Input type={'number'} label={'Cédula'} name="ci" value={form?.ci} classes={'mb-5'} />
+					<Input required={true} type={'number'} label={'Cédula'} name="ci" value={form?.ci} classes={'mb-5'} />
 					<!-- <input value={ci}> -->
-					<Input type={'password'} label={'Contraseña'} name="password" value={form?.password} />
+					<Input required={true} type={'password'} label={'Contraseña'} name="password" value={form?.password} />
 				</div>
 				<input
 					type="submit"
