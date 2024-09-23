@@ -1,41 +1,82 @@
 import { createPool, sql } from '@vercel/postgres'
 import { POSTGRES_URL } from '$env/static/private'
+import bcrypt from 'bcrypt';
 
 async function seed() {
-  const createTable = await sql`
+
+  const reset = await sql`
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS patients CASCADE;
+SET FOREIGN_KEY_CHECKS = 1;
+  `
+
+console.log('Reseted');
+
+  const createUserTable = await sql`
     CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
-      email VARCHAR(255) UNIQUE NOT NULL,
-      image VARCHAR(255),
+      lastname VARCHAR(255)  NOT NULL,
+      ci VARCHAR(11) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
     `
-
   console.log(`Created "users" table`)
 
+
+  const password = 'admin'; // Cambia esto a la contraseña deseada
+  const hashedPassword = await bcrypt.hash(password, 10);
   const users = await Promise.all([
     sql`
-          INSERT INTO users (name, email, image)
-          VALUES ('Guillermo Rauch', 'rauchg@vercel.com', 'https://images.ctfassets.net/e5382hct74si/2P1iOve0LZJRZWUzfXpi9r/9d4d27765764fb1ad7379d7cbe5f1043/ucxb4lHy_400x400.jpg')
-          ON CONFLICT (email) DO NOTHING;
+          INSERT INTO users (name, lastname, ci, password)
+          VALUES ('Juan', 'Donquis', '30847627', ${hashedPassword})
+          ON CONFLICT (ci) DO NOTHING;
       `,
-    sql`
-          INSERT INTO users (name, email, image)
-          VALUES ('Lee Robinson', 'lee@vercel.com', 'https://images.ctfassets.net/e5382hct74si/4BtM41PDNrx4z1ml643tdc/7aa88bdde8b5b7809174ea5b764c80fa/adWRdqQ6_400x400.jpg')
-          ON CONFLICT (email) DO NOTHING;
-      `,
-    sql`
-          INSERT INTO users (name, email, image)
-          VALUES ('Steven Tey', 'stey@vercel.com', 'https://images.ctfassets.net/e5382hct74si/4QEuVLNyZUg5X6X4cW4pVH/eb7cd219e21b29ae976277871cd5ca4b/profile.jpg')
-          ON CONFLICT (email) DO NOTHING;
+      sql`
+          INSERT INTO users (name, lastname, ci, password)
+          VALUES ('Juan', 'Villasmil', '27253194', ${hashedPassword})
+          ON CONFLICT (ci) DO NOTHING;
       `,
   ])
   console.log(`Seeded ${users.length} users`)
 
+  // ------------------------------------------ USERS
+
+  const createPatientTable = await sql`
+    CREATE TABLE IF NOT EXISTS patients (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      lastname VARCHAR(255) NOT NULL,
+      ci VARCHAR(11) UNIQUE NOT NULL,
+      address VARCHAR(255),
+      phone_number VARCHAR(255) NOT NULL,
+      sex VARCHAR(1) NOT NULL,
+      age VARCHAR(3) NOT NULL,
+      "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+    `
+  console.log(`Created "patients" table`)
+
+
+  const patients = await Promise.all([
+    sql`
+          INSERT INTO patients (name, lastname, ci, address, phone_number, sex, age)
+          VALUES ('Jose', 'Rodriguez', '12345678', 'Calle Falsa 123', '123456789', 'M', '30')
+          ON CONFLICT (ci) DO NOTHING;
+      `,
+  ])
+  console.log(`Seeded ${users.length} users`)
+
+
+
   return {
-    createTable,
+    reset,
+    createUserTable,
     users,
+    createPatientTable,
+    patients,
   }
 }
 
