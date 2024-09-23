@@ -5,9 +5,9 @@
     console.log($page)
     const navPages = [
         {
-            icon: "mdi:patient-outline",
+            icon: "healthicons:doctor-male",
             href: "/nomina",
-            name: "Nómina"
+            name: "Doctores"
         },
        
         
