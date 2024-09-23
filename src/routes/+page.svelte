@@ -20,25 +20,25 @@
 </script>
 <Alert />
 <main>
-	<div class="flex flex-col gap-3 items-center justify-center mb-1 py-6">
+	<div class="flex flex-col gap-3 items-center justify-center mb-1 py-6 w-full">
 		<img src={secretariaLogo} class="max-w-12 lg:max-w-16" alt="" />
-		<h1 class=" text-2xl">Emergencia Falcón</h1>
+		<h1 class="text-center text-2xl">Emergencia Falcón</h1>
 	</div>
-	<div class="flex justify-center items-center  w-full">
-		<img src={doctor} class="max-w-96 h-96" alt="" />
+	<div class="flex md:justify-center items-center  w-full">
+		<img src={doctor} class="hidden md:block md:max-w-96 md:h-96" alt="" />
 	
-		<div class="text-center">
+		<div class="text-center w-full">
 			
 			<form
 				method="post"
-				action="?/login"
-				class="mx-auto bg-white bg-opacity-5 rounded-lg shadow-2xl p-6 max-w-96  min-w-72 text-center  flex flex-col md:h-96 min-h-96"
+				action="/"
+				class="mx-auto bg-white bg-opacity-5 rounded-lg shadow-2xl p-6 max-w-80  min-w-64 text-center  flex flex-col md:h-96 min-h-96"
 			>
 				<legend class=" opacity-70 mb-6">INICIAR SESIÓN</legend>
 				<div>
-					<Input type={'number'} label={'Cédula'} bind:value={ci} classes={'mb-5'} />
+					<Input type={'number'} label={'Cédula'} name="ci" bind:value={email} classes={'mb-5'} />
 					<!-- <input bind:value={email}> -->
-					<Input type={'password'} label={'Contraseña'} bind:value={password} />
+					<Input type={'password'} label={'Contraseña'} name="password" bind:value={password} />
 				</div>
 				<input
 					type="submit"
@@ -47,7 +47,7 @@
 				/>
 			</form>
 		</div>
-		<img src={ladyDoctor} class="max-w-96 h-96" alt="" />
+		<img src={ladyDoctor} class="hidden md:block md:max-w-96 md:h-96" alt="" />
 
 	
 	</div>
