@@ -4,6 +4,7 @@ import bcryptjs from 'bcryptjs';
 export  const findUserByCiWithPassword = async (db, ci) => {
 
     const { rows: user } = await db.query('SELECT * FROM users WHERE ci = $1',[ci]);
+    console.log(user[0])
     return user[0];
 
 } 

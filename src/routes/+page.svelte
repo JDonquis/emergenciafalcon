@@ -9,10 +9,10 @@
     import {displayAlert} from "../stores/alertStore"
 
 
-	let email = '';
+	let ci = '';
 	let password = '';
 	let valueSubmit = 'ENTRAR'
-	$: console.log(email, password);
+	$: console.log(ci, password);
 
 	async function handleSubmit() {
 
@@ -31,12 +31,12 @@
 			
 			<form
 				method="post"
-				action="/"
+				action="?/login"
 				class="mx-auto bg-white bg-opacity-5 rounded-lg shadow-2xl p-6 max-w-96  min-w-72 text-center  flex flex-col md:h-96 min-h-96"
 			>
 				<legend class=" opacity-70 mb-6">INICIAR SESIÓN</legend>
 				<div>
-					<Input type={'number'} label={'Cédula'} bind:value={email} classes={'mb-5'} />
+					<Input type={'number'} label={'Cédula'} bind:value={ci} classes={'mb-5'} />
 					<!-- <input bind:value={email}> -->
 					<Input type={'password'} label={'Contraseña'} bind:value={password} />
 				</div>

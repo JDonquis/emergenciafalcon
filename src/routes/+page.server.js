@@ -32,6 +32,9 @@ export const actions = {
   login: async ({cookies, request}) => {
     const loginFormData = await request.formData();
 
+    console.log(request)
+    console.log(loginFormData)
+
     const ci = loginFormData.get('ci')?.toString()?? '';
     const password = loginFormData.get('password')?.toString()?? '';
 
@@ -62,7 +65,11 @@ export const actions = {
         const authToken = jwt.sign({authedUser:userDataWithoutPassword},SECRET_INGREDIENT, {expiresIn:'48h'});
         cookies.set('authToken',authToken,{httpOnly:true, maxAge: 60 * 60 * 48, sameSite:'strict'})
 
-        throw redirect(302,'/dashboard');
+        console.log('here');
+
+        throw redirect(302,'dashboard');
+
+
       }
 
     }
