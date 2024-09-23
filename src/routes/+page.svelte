@@ -8,11 +8,11 @@
 	import Alert from "$lib/components/Alert.svelte";
     import {displayAlert} from "../stores/alertStore"
 
-
-	let email = '';
+	export let loginResponse;
+	let ci = '';
 	let password = '';
 	let valueSubmit = 'ENTRAR'
-	$: console.log(email, password);
+	$: console.log(ci, password);
 
 	async function handleSubmit() {
 
@@ -36,8 +36,8 @@
 			>
 				<legend class=" opacity-70 mb-6">INICIAR SESIÓN</legend>
 				<div>
-					<Input type={'number'} label={'Cédula'} name="ci" bind:value={email} classes={'mb-5'} />
-					<!-- <input bind:value={email}> -->
+					<Input type={'number'} label={'Cédula'} name="ci" bind:value={ci} classes={'mb-5'} />
+					<!-- <input bind:value={ci}> -->
 					<Input type={'password'} label={'Contraseña'} name="password" bind:value={password} />
 				</div>
 				<input
