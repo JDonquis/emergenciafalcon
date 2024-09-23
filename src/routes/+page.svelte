@@ -36,7 +36,7 @@
 			>
 				<legend class=" opacity-70 mb-6">INICIAR SESIÓN</legend>
 				<div>
-					<Input type={'email'} label={'Correo'} bind:value={email} classes={'mb-5'} />
+					<Input type={'number'} label={'Cédula'} bind:value={email} classes={'mb-5'} />
 					<!-- <input bind:value={email}> -->
 					<Input type={'password'} label={'Contraseña'} bind:value={password} />
 				</div>
