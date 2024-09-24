@@ -62,7 +62,7 @@ export const actions = {
         const authToken = jwt.sign({authedUser:userDataWithoutPassword},SECRET_INGREDIENT, {expiresIn:'48h'});
         cookies.set('authToken',authToken,{httpOnly:true, maxAge: 60 * 60 * 48, sameSite:'strict', path:'/'})
 
-        throw redirect(302,'dashboard');
+        throw redirect(200,'dashboard');
 
 
       }
