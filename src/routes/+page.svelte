@@ -8,12 +8,14 @@
 	import Alert from "$lib/components/Alert.svelte";
     import {displayAlert} from "../stores/alertStore"
 
-
-	let ci = '';
-	let password = '';
+	export let form;
+	let password = ""
+	let ci= ""
+	console.log({form})
 	let valueSubmit = 'ENTRAR'
-	$: console.log(ci, password);
-
+	$: if (form?.error) {
+		displayAlert({type: "error", message: form?.message})
+	}
 	async function handleSubmit() {
 
 	}
@@ -36,9 +38,9 @@
 			>
 				<legend class=" opacity-70 mb-6">INICIAR SESIÓN</legend>
 				<div>
-					<Input type={'number'} label={'Cédula'} name="ci" bind:value={ci} classes={'mb-5'} />
-					<!-- <input bind:value={email}> -->
-					<Input type={'password'} label={'Contraseña'} name="password" bind:value={password} />
+					<Input required={true} type={'number'} label={'Cédula'} name="ci" value={form?.ci} classes={'mb-5'} />
+					<!-- <input value={ci}> -->
+					<Input required={true} type={'password'} label={'Contraseña'} name="password" value={form?.password} />
 				</div>
 				<input
 					type="submit"
